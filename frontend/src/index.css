@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  color-scheme: light;
+  --background: 39 33% 96%;
+  --foreground: 218 24% 18%;
+  --card: 40 35% 99%;
+  --card-foreground: 218 24% 18%;
+  --border: 38 21% 87%;
+  --input: 38 21% 83%;
+  --primary: 164 39% 31%;
+  --primary-foreground: 40 35% 99%;
+  --secondary: 38 27% 91%;
+  --secondary-foreground: 218 24% 24%;
+  --muted: 38 24% 92%;
+  --muted-foreground: 216 11% 46%;
+  --accent: 32 62% 91%;
+  --accent-foreground: 25 50% 29%;
+  --destructive: 2 64% 48%;
+  --ring: 164 39% 31%;
+  --sidebar: 218 26% 18%;
+  --sidebar-foreground: 40 25% 91%;
+  --chart-1: 164 48% 36%;
+  --chart-2: 29 78% 56%;
+  --chart-3: 218 36% 48%;
+  --chart-4: 4 58% 56%;
+  --chart-5: 44 66% 54%;
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-mono: 'DM Mono', monospace;
+  --radius: 14px;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: 218 25% 12%;
+  --foreground: 39 24% 91%;
+  --card: 218 22% 16%;
+  --card-foreground: 39 24% 91%;
+  --border: 218 16% 27%;
+  --input: 218 16% 30%;
+  --primary: 160 42% 56%;
+  --primary-foreground: 218 25% 12%;
+  --secondary: 218 18% 22%;
+  --secondary-foreground: 39 24% 91%;
+  --muted: 218 18% 21%;
+  --muted-foreground: 216 12% 66%;
+  --accent: 25 38% 25%;
+  --accent-foreground: 35 58% 82%;
+  --destructive: 2 62% 61%;
+  --ring: 160 42% 56%;
+  --sidebar: 218 28% 9%;
+  --sidebar-foreground: 39 24% 89%;
+  --chart-1: 160 49% 55%;
+  --chart-2: 29 79% 63%;
+  --chart-3: 214 56% 67%;
+  --chart-4: 4 63% 65%;
+  --chart-5: 44 71% 62%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; font-family: var(--app-font-sans); }
+  button, input, select { font: inherit; }
+}
+
+.app-shell { min-height: 100dvh; }
+.sidebar { background: hsl(var(--sidebar)); color: hsl(var(--sidebar-foreground)); }
+.panel { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 16px; }
+.mono { font-family: var(--app-font-mono); }
+.eyebrow { font-family: var(--app-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.reveal { animation: rise-in .42s cubic-bezier(.2,.75,.25,1) both; }
+.reveal-delay { animation-delay: .08s; }
+.tool-button, .tool-icon {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid hsl(var(--border)); background: hsl(var(--card)); color: hsl(var(--foreground));
+  border-radius: 10px; height: 38px; padding: 0 12px; font-size: 12px; font-weight: 600;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.tool-icon { width: 38px; padding: 0; }
+.tool-button:hover, .tool-icon:hover { background: hsl(var(--muted)); border-color: hsl(var(--primary) / .3); }
+.tool-button:active, .tool-icon:active { transform: translateY(1px); }
+.button-primary, .button-secondary, .pager-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 38px; border-radius: 10px; padding: 0 14px; font-size: 12px; font-weight: 700;
+  transition: background-color .18s ease, transform .18s ease, border-color .18s ease;
+}
+.button-primary { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.button-primary:hover { filter: brightness(1.06); }
+.button-primary:disabled, .button-secondary:disabled, .pager-button:disabled { opacity: .45; cursor: not-allowed; }
+.button-secondary, .pager-button { border: 1px solid hsl(var(--border)); background: hsl(var(--card)); color: hsl(var(--foreground)); }
+.button-secondary:hover, .pager-button:hover:not(:disabled) { background: hsl(var(--muted)); }
+.filter-field { display: flex; width: 168px; flex-direction: column; gap: 6px; }
+.filter-field > span { color: hsl(var(--muted-foreground)); font-family: var(--app-font-mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.filter-field input, .select-field {
+  height: 38px; border: 1px solid hsl(var(--border)); border-radius: 9px; background: hsl(var(--background));
+  padding: 0 10px; color: hsl(var(--foreground)); font-size: 12px; outline: none;
+}
+.filter-field input:focus, .search-field:focus-within, .select-field:focus { border-color: hsl(var(--primary)); box-shadow: 0 0 0 3px hsl(var(--primary) / .12); }
+.preset-button { height: 36px; border-radius: 8px; padding: 0 10px; color: hsl(var(--muted-foreground)); font-family: var(--app-font-mono); font-size: 10px; }
+.preset-button:hover { background: hsl(var(--muted)); color: hsl(var(--foreground)); }
+.search-field { display: flex; height: 38px; min-width: 190px; align-items: center; gap: 8px; border: 1px solid hsl(var(--border)); border-radius: 9px; background: hsl(var(--background)); padding: 0 10px; color: hsl(var(--muted-foreground)); }
+.search-field input { width: 100%; min-width: 0; border: 0; background: transparent; outline: 0; color: hsl(var(--foreground)); font-size: 12px; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+.data-table th { padding: 12px 20px; background: hsl(var(--muted) / .6); color: hsl(var(--muted-foreground)); font-family: var(--app-font-mono); font-size: 9px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase; }
+.data-table td { padding: 13px 20px; border-top: 1px solid hsl(var(--border) / .75); font-size: 12px; }
+.data-table tbody tr:hover { background: hsl(var(--muted) / .34); }
+.metric-mini { display: flex; min-height: 72px; flex-direction: column; justify-content: space-between; gap: 8px; border-radius: 11px; background: hsl(var(--muted) / .65); padding: 12px; }
+.metric-mini span { color: hsl(var(--muted-foreground)); font-family: var(--app-font-mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.metric-mini strong { font-size: 12px; }
+.loading-bars { display: block; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: rotate 650ms linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+@media (max-width: 1023px) { .sidebar { display: none !important; } }
+@media (max-width: 640px) {
+  .main-content { padding-left: 16px !important; padding-right: 16px !important; }
+  .filter-field { width: calc(50% - 6px); }
+  .filter-field input { width: 100%; }
+  .preset-button { padding-inline: 7px; }
+}
+@keyframes rise-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media print {
+  @page { margin: .45in; }
+  body { margin: 0; background: white !important; color: #18202a !important; }
+  .sidebar, .print-hidden { display: none !important; }
+  .app-shell { display: block !important; }
+  .main-content { padding: 0 !important; width: 100% !important; }
+  .panel { break-inside: avoid; box-shadow: none !important; background: white !important; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

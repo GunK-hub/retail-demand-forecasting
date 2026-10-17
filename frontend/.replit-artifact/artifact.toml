@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Retail Forecast Dashboard"
+description = "An interactive retail demand forecasting dashboard that explores historical sales, generates transparent baseline forecasts, evaluates models with chronological backtesting, and lets users import and export CSV datasets."
+version = "1.0.0"
+id = "artifacts/retail-forecast-dashboard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22937
+
+[services.development]
+run = "pnpm --filter @workspace/retail-forecast-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/retail-forecast-dashboard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/retail-forecast-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22937"
+BASE_PATH = "/"
