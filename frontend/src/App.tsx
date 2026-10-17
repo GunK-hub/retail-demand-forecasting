@@ -360,7 +360,7 @@ function ForecastPage() {
     }
     let active = true;
     setBackendForecast([]);
-    fetch(`/api/forecast?days=${horizon}`)
+    fetch(`${API_BASE_URL}/api/forecast?days=${horizon}`)
       .then(response => {
         if (!response.ok) throw new Error('Forecast API request failed');
         return response.json();
