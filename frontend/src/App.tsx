@@ -14,6 +14,10 @@ import { parseSalesCsv } from '@/lib/csv';
 import { addDays, aggregateDaily, evaluateModels, generateForecast, getWeekdayAverages, movingAverage } from '@/lib/forecasting';
 import type { DailySales, ForecastPoint, SalesRecord } from '@/lib/types';
 
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+
 type SourceKind = 'synthetic' | 'imported' | 'project';
 type Workspace = {
   records: SalesRecord[];
@@ -82,7 +86,7 @@ function WorkspaceProvider({ children }: { children: ReactNode }) {
   // Prefer the real processed dataset served by the Python forecasting backend.
   useEffect(() => {
     let active = true;
-    fetch('/api/history')
+    fetch(`${API_BASE_URL}/api/history`)
       .then(response => {
         if (!response.ok) throw new Error('Python API is unavailable');
         return response.json();
@@ -496,7 +500,7 @@ function ModelsPage() {
   const [projectMetrics, setProjectMetrics] = useState<{ validation_models: Array<Record<string, string | number | null>>; recursive_backtest: Array<Record<string, string | number | null>> } | null>(null);
   useEffect(() => {
     let active = true;
-    fetch('/api/model-metrics')
+    fetch(`${API_BASE_URL}/api/model-metrics`)
       .then(response => { if (!response.ok) throw new Error('Metrics API request failed'); return response.json(); })
       .then(payload => { if (active) setProjectMetrics(payload); })
       .catch(() => { if (active) setProjectMetrics(null); });
